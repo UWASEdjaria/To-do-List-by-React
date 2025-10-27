@@ -18,7 +18,7 @@ import {useState} from 'react'
             <input className='border-2  p-2  w-full items-center  rounded-lg'
             type='text'
             placeholder='Enter task ......'
-            value={newTask}
+            value={newTask} 
             onChange={(e)=>setNewTask(e.target.value)}
             />
              

@@ -2,6 +2,7 @@
 import './App.css'
 import './index.css'
 import ToDoList from './components/ToDoList'
+import TaskList from './components/TaskList'
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
     
       <div>
        <ToDoList/>
+       <TaskList/>
     </div>
   )
 }
