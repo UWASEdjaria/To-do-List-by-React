@@ -1,7 +1,7 @@
 
 import './App.css'
 import './index.css'
-import ToDoListForm from './components/ToDoListForm'
+import ToDoList from './components/ToDoList'
 
 function App() {
 
@@ -9,7 +9,7 @@ function App() {
   return (
     
       <div>
-       <ToDoListForm/>
+       <ToDoList/>
     </div>
   )
 }
