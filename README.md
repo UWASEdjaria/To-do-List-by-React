@@ -21,8 +21,9 @@ my-todo-app/
 │
 ├─ src/
 │  ├─ components/
-│  │   ├─ ToDoList.jsx       # Input + add tasks
-│  │   └─ TaskList.jsx       # Task display + delete + drag-drop
+│  │   ├─ ToDoList.jsx       # Input + add tasks and 
+                             # Task display + delete + drag-drop
+│  │   └     
 │  │
 │  ├─ App.jsx                # Main app
 │  ├─ index.js               # Entry point

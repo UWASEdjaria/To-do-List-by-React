@@ -1,4 +1,4 @@
-import DragAndDrop from './components/DragAndDrop';
+
 import ToDoList from './components/ToDoList';
 
 function App() {
