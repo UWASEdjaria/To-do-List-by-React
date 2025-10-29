@@ -5,32 +5,48 @@ function ToDoList() {
   const [newTask, setNewTask] = useState("");
   const [category, setCategory] = useState("Today");
   const [draggingIndex, setDraggingIndex] = useState(null);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
- const addTask = () => {
+  const addTask = () => {
     if (!newTask.trim()) return;
-    setTasks([
-      ...tasks,
-      { text: newTask, category, x: 0, y: 0 }
-    ]);
+    setTasks([...tasks, { text: newTask, category, x: 0, y: 0 }]);
     setNewTask("");
   };
-  const deleteTask = (index) =>
-    setTasks(tasks.filter((_, i) => i !== index));
 
- const moveTask = (index, e) => {
-  const t = [...tasks];
-  t[index].x = e.nativeEvent.offsetX;
-  t[index].y = e.nativeEvent.offsetY;
-  setTasks(t);
-  setDraggingIndex(null);
-};
+  const deleteTask = (index) => setTasks(tasks.filter((_, i) => i !== index));
 
+  // Mouse down starts dragging
+  const handleMouseDown = (e, index) => {
+    setDraggingIndex(index);
+    const task = tasks[index];
+    setOffset({
+      x: e.clientX - task.x,
+      y: e.clientY - task.y,
+    });
+  };
 
+  // Mouse move while dragging
+  const handleMouseMove = (e) => {
+    if (draggingIndex === null) return;
+    const t = [...tasks];
+    t[draggingIndex].x = e.clientX - offset.x;
+    t[draggingIndex].y = e.clientY - offset.y;
+    setTasks(t);
+  };
+
+  // Mouse up stops dragging
+  const handleMouseUp = () => setDraggingIndex(null);
 
   return (
-    <section className="flex flex-col w-72 justify-center items-center rounded-xl min-h-screen bg-purple-800 p-5 relative">
+    <section
+      className="flex flex-col w-72 justify-center items-center rounded-xl min-h-screen bg-purple-800 p-5 relative"
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+    >
       <div className="w-full flex flex-col gap-3 items-center">
-        <h1 className="text-white text-2xl font-bold text-center mb-3">To Do List</h1>
+        <h1 className="text-white text-2xl font-bold text-center mb-3">
+          To Do List
+        </h1>
 
         <input
           value={newTask}
@@ -48,19 +64,22 @@ function ToDoList() {
           <option>Tomorrow</option>
         </select>
 
-        <button onClick={addTask} className="w-full p-2 text-white bg-amber-600 rounded-full">
+        <button
+          onClick={addTask}
+          className="w-full p-2 text-white bg-amber-600 rounded-full"
+        >
           Add
         </button>
 
         <div className="w-full mt-5 relative" style={{ minHeight: "400px" }}>
-          {tasks.length === 0 && <p className="text-white text-center animate-ping">No tasks yet</p>}
+          {tasks.length === 0 && (
+            <p className="text-white text-center animate-ping">No tasks yet</p>
+          )}
 
           {tasks.map((t, i) => (
             <div
               key={i}
-              draggable
-              onMouseDown={() => setDraggingIndex(i)} //keeps track of which task is currently being dragged.
-              onDragEnd={(e) => moveTask(i, e)}
+              onMouseDown={(e) => handleMouseDown(e, i)}
               className="flex justify-between items-center bg-gray-200 p-2 rounded-lg shadow-lg cursor-grab select-none"
               style={{
                 marginBottom: "25px",
@@ -71,7 +90,9 @@ function ToDoList() {
                 zIndex: draggingIndex === i ? 40 : 1,
               }}
             >
-              <span>{t.text} - {t.category}</span>
+              <span>
+                {t.text} - {t.category}
+              </span>
               <button
                 onClick={() => deleteTask(i)}
                 className="bg-purple-600 text-white p-1 rounded-full hover:bg-red-600"
