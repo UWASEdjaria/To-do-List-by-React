@@ -20,7 +20,6 @@ function ToDoList() {
     setTasks(tasks.filter((_, i) => i !== index));
   };
 
-  // New function: update position only on drag end
   const handleDragEnd = (index, e) => {
     const rect = e.currentTarget.parentElement.getBoundingClientRect();
     const newTasks = [...tasks];
@@ -74,6 +73,7 @@ function ToDoList() {
               key={index}
               draggable
               onDragEnd={(e) => handleDragEnd(index, e)}
+              onMouseDown={() => setDraggingIndex(index)}
               className="flex justify-between items-center bg-gray-200 p-2 rounded-lg shadow-lg cursor-grab select-none"
               style={{
                 position: "absolute",
@@ -83,7 +83,6 @@ function ToDoList() {
                 maxWidth: "320px",
                 zIndex: draggingIndex === index ? 50 : 10,
               }}
-              onMouseDown={() => setDraggingIndex(index)}
             >
               <span>
                 {task.text} - {task.category}
