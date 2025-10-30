@@ -87,6 +87,7 @@ function ToDoList() {
                 left: t.x,
                 top: t.y,
                 width: "90%",
+                 zIndex: draggingIndex === i ? 40 : 1, // <-- this makes dragged item on top
                
               }}
             >
