@@ -15,7 +15,7 @@ function ToDoList() {
 
   const deleteTask = (index) => setTasks(tasks.filter((_, i) => i !== index));
 
-  // Mouse down starts dragging
+  // Mouse down starts dragging process
   const handleMouseDown = (e, index) => {
     setDraggingIndex(index);
     const task = tasks[index];
@@ -25,7 +25,7 @@ function ToDoList() {
     });
   };
 
-  // Mouse move while dragging
+  // moves as user move the mouse
   const handleMouseMove = (e) => {
     if (draggingIndex === null) return;
     const t = [...tasks];
@@ -34,7 +34,7 @@ function ToDoList() {
     setTasks(t);
   };
 
-  // Mouse up stops dragging
+  //If the user is not dragging any item, stop the function
   const handleMouseUp = () => setDraggingIndex(null);
 
   return (
@@ -87,7 +87,7 @@ function ToDoList() {
                 left: t.x,
                 top: t.y,
                 width: "90%",
-                zIndex: draggingIndex === i ? 40 : 1,
+               
               }}
             >
               <span>
